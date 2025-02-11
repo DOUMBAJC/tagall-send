@@ -58,13 +58,14 @@
                      transition-colors flex items-center gap-2"
         >
           <span>{{ isLoading ? 'Traitement...' : 'Soumettre' }}</span>
-          <span v-if="!isLoading" class="matrix-chars"></span>
+          <span v-if="!isLoading" class="matrix-chars overflow-hidden"></span>
         </span>
         <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 
                     transition-opacity duration-300"
         >
           <div class="matrix-glow"></div>
         </div>
+        <div class="matrix-rain absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-30"></div>
       </button>
     </div>
   </div>
@@ -156,19 +157,22 @@ const isValid = computed(() => {
 <style scoped>
 .matrix-chars::after {
   content: '01';
-  animation: matrix-chars 1s steps(2) infinite;
+  font-family: monospace;
+  animation: matrix-chars 0.8s steps(4) infinite;
 }
 
 @keyframes matrix-chars {
   0% { content: '01'; }
-  50% { content: '10'; }
+  25% { content: '10'; }
+  50% { content: '11'; }
+  75% { content: '00'; }
   100% { content: '01'; }
 }
 
 .matrix-glow {
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, rgba(0,255,0,0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0,255,0,0.3) 0%, transparent 70%);
   animation: glow 2s ease-in-out infinite;
 }
 
@@ -176,5 +180,21 @@ const isValid = computed(() => {
   0% { transform: scale(1); opacity: 0.5; }
   50% { transform: scale(1.2); opacity: 0.8; }
   100% { transform: scale(1); opacity: 0.5; }
+}
+
+.matrix-rain {
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 255, 0, 0.2) 50%,
+    transparent 100%
+  );
+  background-size: 100% 50px;
+  animation: matrix-rain 1s linear infinite;
+}
+
+@keyframes matrix-rain {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 50px; }
 }
 </style> 
