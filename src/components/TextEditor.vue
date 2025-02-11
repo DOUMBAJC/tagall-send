@@ -99,7 +99,7 @@ const applyFormat = (format) => {
 const validate = () => {
   if (characterCount.value > props.maxLength) {
     hasError.value = true
-    errorMessage.value = `Le texte dépasse la limite de ${props.maxLength} caractères`
+    errorMessage.value = `Le texte dépasse la limite de ${props.maxLength} caractères (actuellement ${characterCount.value} caractères)`
     return false
   }
   hasError.value = false
